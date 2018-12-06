@@ -1,0 +1,37 @@
+#form-container{
+background-color: whitesmoke;
+width:800px;
+height:300px;
+position:absolute;
+padding:100px;
+left:30%;
+top:25%;
+
+padding-top:20px;
+padding-bottom:20px;
+padding: 10px;
+box-shadow: 5px 8px 10px 7px #888888;
+}
+
+div h1 {
+    margin-left:38%;
+    margin-bottom:20px;
+    
+}
+
+
+#logged-in{
+    background-color: whitesmoke;
+    width:800px;
+    height:300px;
+    position:absolute;
+    padding:100px;
+    left:30%;
+    top:100%;
+    
+    padding-top:20px;
+    padding-bottom:20px;
+    padding: 10px;
+    box-shadow: 5px 8px 10px 7px #888888;
+    }
+

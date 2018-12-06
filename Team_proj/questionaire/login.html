@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="questionaire.css">
+
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBOXecW7WE7azp_js98Wb5pJQmLuHB4ldA",
+            authDomain: "login-c3fa4.firebaseapp.com",
+            databaseURL: "https://login-c3fa4.firebaseio.com",
+            projectId: "login-c3fa4",
+            storageBucket: "login-c3fa4.appspot.com",
+            messagingSenderId: "68860400612"
+        };
+        firebase.initializeApp(config);
+    </script>
+    </script>
+
+
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active div-font-color" href="../home/index.html">Home </a>
+            <a class="nav-item nav-link div-font-colo" href="../budget2.0/dindex.html">Budget Planner</a>
+            <a class="nav-item nav-link " href="../browseCar/insurance.html">Insurance</a>
+            <a class="nav-item nav-link " href="../browseCar/browser.html">Browser Car</a>
+            <a class="nav-item nav-link " href="../questionaire/login.html">questionaire</a>
+        </div>
+    </nav>
+
+
+    <script> src = "login.js"</script>
+    <div id="form-container">
+        <h1>questions</h1>
+        <form>
+            <div class="form-group row mar">
+                <label class="col-sm-2 col-form-label">Question </label>
+                <div class="col-sm-10" style="padding-left:0px; padding-right:100px">
+                    <input class="form-control" style="margin-right:10px" id="text1">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Answer</label>
+                <div class="col-sm-10" style="padding-left:0px; padding-right:100px">
+                    <input class="form-control" id="text2">
+                </div>
+            </div>
+            <button type="button" onclick="question_form() ,get_answers()" class="btn btn-primary" style="float: right; margin-right: 100px">Submit</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    var question_number = 1
+    var user_answers = {}
+    var answer_number = 1
+    function question_form() {
+        let database = firebase.database().ref('users/questions');
+        var question_dict
+        database.on('value', function (snapshot) {
+            set_question(snapshot.val())
+        })
+    }
+
+
+    function set_question(questions) {
+        console.log(questions)
+        let question_text_field = document.getElementById("text1")
+        console.log(question_number)
+        if (question_number <= 3) {
+            question_text_field.value = questions["question" + String(question_number)]
+        }
+        else {
+            question_text_field.value = "sorry boss no more questionas"
+        }
+        question_number++
+    }
+
+    function get_answers() {
+        let text2 = document.getElementById("text2").value;
+        console.log(text2)
+        user_answers["answer" + answer_number] = text2
+        console.log(user_answers)
+        if (answer_number == 3) {
+            input(user_answers)
+        }
+        answer_number++
+    }
+
+    function input() {
+        database = firebase.database()
+        database.ref('users').update({
+            user_answers
+        });
+    }
+
+
+
+    question_form()
+
+</script>
