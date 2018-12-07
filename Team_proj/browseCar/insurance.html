@@ -2,47 +2,96 @@
 <html lang="en">
 
 <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="custom.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAM3pamMGKUF78VDNT6CR8tK4EMCQOrtPs",
+        authDomain: "carwebsite-18c8b.firebaseapp.com",
+        databaseURL: "https://carwebsite-18c8b.firebaseio.com",
+        projectId: "carwebsite-18c8b",
+        storageBucket: "carwebsite-18c8b.appspot.com",
+        messagingSenderId: "193174067226"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        li {
+            font-size: 20px;
+        }
+
+        .card-deck {
+            text-align: center;
+            list-style-position: inside;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body {
+
+            background-image: url("icbc-logo.jpg"); margin-top: 10px;
+            background-repeat: no-repeat;
+            background-position-x: center;
+        }
+    </style>
 </head>
 
 <body>
+
     <nav class="navbar navbar-fixed-top">
         <div class="container-fluid" style="border:none; background-color:black;">
             <ul class="nav navbar-nav navbar-item-spacing center">
                 <li class="nav-item navbar-item-spacing"> <a href="../home/index.html">Home</a></li>
-                <li class="nav-item navbar-item-spacing"> <a href="../budget2.0/dindex.html">Budget Planner</a></li>
-                <li class="nav-item navbar-item-spacing"> <a href="../browseCar/insurance.html">insurance</a></li>
-                <li class="nav-item navbar-item-spacing"> <a href="../browseCar/browser.html">Browser Car</a></li>
+                <li class="nav-item navbar-item-spacing"> <a href="../budget2.0/dindex.html">Budget</a></li>
+                <li class="nav-item navbar-item-spacing"> <a href="../browseCar/insurance.html">Insurance</a></li>
+                <li class="nav-item navbar-item-spacing"> <a href="../browseCar/browser.html">Browse car</a></li>
                 <li class="nav-item navbar-item-spacing"> <a href="../questionaire/login.html">questionaire</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="card-body" style = "margin-top: 100px;">
-        <div class="card-deck" style="text-align: center; list-style-position: inside">
+    </div>
+
+    <div class="card-body" style="margin-top: 23%;">
+        <div class="card-deck">
             <div class="card mb-4 shadow-sm">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Total Cost</h4>
+                    <h2 class="my-0 font-weight-normal">Total Cost</h2>
                 </div>
                 <div class="card-body">
                     <h1 class="card-title pricing-card-title">$234 <small class="text-muted">/ month</small></h1>
                     <ul>
-                        <p>According to your profile infomation given</p>
-                        <li>condition1</li>
-                        <li>condition2</li>
-                        <li>condition3</li>
-                        <li>condition4</li>
+                        <p>According to your profile infomation given.</p>
+                        <li><b>condition1: </b><p id="haojun"></p></li>
+                        <li><b>condition2: </b><p>Do not exceed 15km on one travel.</p></li>
+                        <li><b>condition3: </b><p>Do not drive more than 6 times in a month.</p></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function start(){
+            let database = firebase.database().ref('users/user_answers/answer3')
+            database.on('value',function(snapshot){
+                console.log(snapshot.val())
+                set_text(snapshot.val())
+        })
+        }
 
+        function set_text(word){
+            let paragraph = document.getElementById("haojun")
+            paragraph.innerHTML= ("Only you can drive the " + word)
+        }
+
+        start()
+    </script>
 </body>
 
 </html>

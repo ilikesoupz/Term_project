@@ -26,6 +26,12 @@
 }
 
 
+.div-picture-margin{
+    margin-bottom:320px; 
+    border-bottom: black solid 1px;
+    height: 40%;
+}
+
 .div-font-color{
     color: white;
 }

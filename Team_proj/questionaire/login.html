@@ -9,20 +9,19 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="questionaire.css">
 
-    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
     <script>
         // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyBOXecW7WE7azp_js98Wb5pJQmLuHB4ldA",
-            authDomain: "login-c3fa4.firebaseapp.com",
-            databaseURL: "https://login-c3fa4.firebaseio.com",
-            projectId: "login-c3fa4",
-            storageBucket: "login-c3fa4.appspot.com",
-            messagingSenderId: "68860400612"
+            apiKey: "AIzaSyAM3pamMGKUF78VDNT6CR8tK4EMCQOrtPs",
+            authDomain: "carwebsite-18c8b.firebaseapp.com",
+            databaseURL: "https://carwebsite-18c8b.firebaseio.com",
+            projectId: "carwebsite-18c8b",
+            storageBucket: "carwebsite-18c8b.appspot.com",
+            messagingSenderId: "193174067226"
         };
         firebase.initializeApp(config);
-    </script>
     </script>
 
 
@@ -44,7 +43,7 @@
 
     <script> src = "login.js"</script>
     <div id="form-container">
-        <h1>questions</h1>
+        <h1>Questions</h1>
         <form>
             <div class="form-group row mar">
                 <label class="col-sm-2 col-form-label">Question </label>
@@ -87,15 +86,16 @@
             question_text_field.value = questions["question" + String(question_number)]
         }
         else {
-            question_text_field.value = "sorry boss no more questionas"
+            question_text_field.value = "Thats all of the questions!"
         }
         question_number++
     }
 
     function get_answers() {
-        let text2 = document.getElementById("text2").value;
+        let text2 = document.getElementById("text2")
         console.log(text2)
-        user_answers["answer" + answer_number] = text2
+        user_answers["answer" + answer_number] = text2.value
+        text2.value = ""
         console.log(user_answers)
         if (answer_number == 3) {
             input(user_answers)

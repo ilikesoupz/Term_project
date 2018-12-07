@@ -2,32 +2,36 @@
 <html lang="en">
 
 <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="custom.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAM3pamMGKUF78VDNT6CR8tK4EMCQOrtPs",
+            authDomain: "carwebsite-18c8b.firebaseapp.com",
+            databaseURL: "https://carwebsite-18c8b.firebaseio.com",
+            projectId: "carwebsite-18c8b",
+            storageBucket: "carwebsite-18c8b.appspot.com",
+            messagingSenderId: "193174067226"
+        };
+        firebase.initializeApp(config);
+    </script>
     <style>
-        #car{
+        .car{
         width: 300;
         height: 130px;
         float: left;
     }
     
-    #honda{
+    .cartext{
         font-size: 25px;
     }
-    #toyota{
-        font-size: 25px;
-    }
-    #subaru{
-        font-size: 25px;
-    }
-    #chevy{
-        font-size: 25px;
-    }
+    
     p {
         clear: both;
     }
@@ -35,6 +39,7 @@
         border: solid black 2px;
         width:auto;
         height: auto;
+        margin-right:10px;
     }
     img{
         width: 200px;
@@ -43,11 +48,11 @@
     </style>
 
 </head>
-    
+
 
 <body>
     <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid" style = "border:none; background-color:black;">
+        <div class="container-fluid" style="border:none; background-color:rgb(36, 41, 46);">
             <ul class="nav navbar-nav navbar-item-spacing center">
                 <li class="nav-item navbar-item-spacing"> <a href="../home/index.html">Home</a></li>
                 <li class="nav-item navbar-item-spacing"> <a href="../budget2.0/dindex.html">Budget</a></li>
@@ -63,51 +68,67 @@
 
     <ul id="myUL">
         <div>
-            <img id="car" src="honda.png">
-            <a href="#" id="honda">Honda</a>
+            <img id="car1" class="car">
+            <a href="#" class="cartext" id="cart1">Honda</a>
             <h1>$24,1431.99</h1>
-            <p> Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-            </p>
+            <p id = "carp1"></p>
         </div>
 
         <div>
-            <img id="car" src="toyota.jpg">
-            <a href="#" id="toyota">Toyota</a>
+            <img id="car2" class="car">
+            <a href="#" class="cartext" id="cart2">Toyota</a>
             <h1>$43,1342.99</h1>
-            <p> Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-            </p>
+            <p id = "carp2"> </p>
         </div>
 
         <div>
-            <img id="car" src="subaru.jpg">
-            <a href="#" id="subaru">Subaru</a>
+            <img id="car3" class="car">
+            <a href="#" class="cartext" id="cart3">Subaru</a>
             <h1>$32,1341.99</h1>
-            <p> Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-            </p>
+            <p id = "carp3"> </p>
         </div>
 
         <div>
-            <img id="car" src="chevy.jpg">
-            <a href="#" id="chevy">Chevrolet</a>
+            <img id="car4" class="car">
+            <a href="#" class="cartext" id="cart4">Chevrolet</a>
             <h1>$31,5312.99</h1>
-            <p> Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-                Here's some text. Here's some text. Here's some text. Here's some text.
-            </p>
+            <p id = "carp4"></p>
         </div>
     </ul>
 
     <script>
+        var cars_called = []
+        function get_images() {
+            let database = firebase.database().ref('users');
+            database.on('value', function (snapshot) {
+                console.log(snapshot)
+                var images = snapshot.val()
+                for (var k = 1; k <= 4; k++) {
+
+                    var flag = false
+                    while(flag == false){
+                        var car_number  = Math.floor(Math.random() * 4) + 1
+                        if(cars_called.indexOf(car_number) == -1){
+                            flag = true
+                            cars_called.push(car_number)
+                        }
+                    }
+                    let picture = document.getElementById("car" + String(k))
+                    let car_description = document.getElementById("carp" + String(k))
+                    let car_link = document.getElementById("cart" + String(k))
+                    car_link.innerHTML = images["car" + String(car_number)]["name"]
+                    car_description.innerHTML = images["car" + String(car_number)]["description"]
+                    if(images["car" + String(car_number)]["name"] == "honda"){
+                        picture.src = images["car" + String(car_number)]["name"] + ".png"
+                    }
+                    else{
+                        picture.src = images["car" + String(car_number)]["name"] + ".jpg"
+                    }
+                }
+            })
+        }
+
+        get_images()
     </script>
 </body>
 
